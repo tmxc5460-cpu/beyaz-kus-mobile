@@ -7,6 +7,145 @@
 let currentUser = null;
 let speechEnabled = true; // Text-to-speech kontrolü
 
+// PWA ve Bildirim Sistemi
+let deferredPrompt = null;
+let notificationPermission = null;
+
+// Service Worker Kaydet
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(registration) {
+                console.log('Service Worker kaydedildi: ', registration);
+            })
+            .catch(function(error) {
+                console.log('Service Worker kaydedilemedi: ', error);
+            });
+    });
+}
+
+// PWA Kurulum İstemi
+window.addEventListener('beforeinstallprompt', function(e) {
+    // Kurulum istemini kaydet
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    // Kurulum butonunu göster
+    showInstallButton();
+});
+
+function showInstallButton() {
+    // Kurulum butonu oluştur
+    const installBtn = document.createElement('button');
+    installBtn.innerHTML = '<i class="fas fa-download mr-2"></i>Uygulamayı Yükle';
+    installBtn.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50 hover:bg-green-600 transition';
+    installBtn.onclick = installApp;
+    document.body.appendChild(installBtn);
+}
+
+function installApp() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(choiceResult) {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('Kullanıcı uygulamayı kurdu');
+                showNotification('BEYAZ KUŞ yüklendi!', 'Ana ekranınıza eklendi.');
+            }
+            deferredPrompt = null;
+        });
+    }
+}
+
+// Bildirim İzni İste
+function requestNotificationPermission() {
+    if ('Notification' in window) {
+        Notification.requestPermission().then(function(permission) {
+            notificationPermission = permission;
+            if (permission === 'granted') {
+                showNotification('Bildirimler Aktif!', 'BEYAZ KUŞ size bildirim gönderebilir.');
+            }
+        });
+    }
+}
+
+// Bildirim Göster
+function showNotification(title, body) {
+    if (notificationPermission === 'granted' && 'serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification(title, {
+                body: body,
+                icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23667eea"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>',
+                badge: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23667eea"><circle cx="12" cy="12" r="10"/></svg>',
+                vibrate: [100, 50, 100],
+                tag: 'beyaz-kus'
+            });
+        });
+    } else if (notificationPermission === 'granted') {
+        // Fallback - Service Worker olmadan
+        new Notification(title, {
+            body: body,
+            icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23667eea"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>'
+        });
+    }
+}
+
+// Mobil Cihaz Tespiti
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Mobil Kurulum Rehberi
+function showMobileInstallGuide() {
+    if (isMobile()) {
+        const guide = document.createElement('div');
+        guide.className = 'fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4';
+        guide.innerHTML = `
+            <div class="bg-white rounded-2xl p-6 max-w-md w-full">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-mobile-alt mr-2"></i>Mobil Uygulama Kurulumu
+                </h3>
+                <div class="space-y-3 text-sm text-gray-600">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-purple-600 font-bold">1</span>
+                        </div>
+                        <p>Chrome menüsünü aç (üç nokta)</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-purple-600 font-bold">2</span>
+                        </div>
+                        <p>"Ana ekrana ekle" veya "Uygulamayı yükle" seçeneğine tıklayın</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-purple-600 font-bold">3</span>
+                        </div>
+                        <p>"Yükle" butonuna basarak kurulumu tamamlayın</p>
+                    </div>
+                </div>
+                <button onclick="this.parentElement.parentElement.remove()" class="w-full mt-6 bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">
+                    Anladım
+                </button>
+            </div>
+        `;
+        document.body.appendChild(guide);
+    }
+}
+
+// Sayfa yüklendiğinde bildirim izni iste ve mobil rehberi göster
+document.addEventListener('DOMContentLoaded', function() {
+    // Bildirim izni iste
+    requestNotificationPermission();
+    
+    // Mobil cihazda kurulum rehberini göster
+    setTimeout(() => {
+        if (isMobile() && !deferredPrompt) {
+            showMobileInstallGuide();
+        }
+    }, 3000);
+});
+
 function handleLogin(event) {
     event.preventDefault();
     
@@ -205,6 +344,11 @@ function sendMessage() {
     // Text-to-speech ile sesli olarak oku
     if (speechEnabled) {
         speakText(aiResponse);
+    }
+    
+    // Bildirim gönder (mobil cihazda ve izin varsa)
+    if (isMobile() && notificationPermission === 'granted') {
+        showNotification('BEYAZ KUŞ', 'Yeni mesajınız var!');
     }
 }
 

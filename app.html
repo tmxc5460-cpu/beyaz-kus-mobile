@@ -6,6 +6,8 @@
     <title>BEYAZ KUŞ - Mobil Uygulama İndir</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
     <style>
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -49,6 +51,18 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+        .step-indicator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -142,12 +156,36 @@
                 </div>
             </div>
 
-            <!-- Sağ Taraf - İndirme Butonları -->
+            <!-- Sağ Taraf - İndirme Seçenekleri -->
             <div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-6">
                     <i class="fas fa-mobile-alt mr-2"></i>Mobil Uygulamayı İndir
                 </h2>
                 
+                <!-- PWA Kurulum (Önerilen) -->
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl p-6 mb-4 text-white">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-globe text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold">Web Uygulaması (PWA)</h3>
+                            <p class="text-sm opacity-90">Hiçbir indirme gerekmez</p>
+                        </div>
+                    </div>
+                    
+                    <button onclick="installPWA()" class="w-full bg-white text-purple-600 py-4 rounded-xl font-bold text-lg pulse mb-4">
+                        <i class="fas fa-rocket mr-2"></i>
+                        Anında Yükle (Önerilen)
+                    </button>
+                    
+                    <div class="text-sm opacity-90">
+                        <p class="mb-2"><i class="fas fa-check mr-2"></i>Tüm telefonlarda çalışır</p>
+                        <p class="mb-2"><i class="fas fa-check mr-2"></i>Hiçbir indirme yok</p>
+                        <p><i class="fas fa-check mr-2"></i>Anında kullanım</p>
+                    </div>
+                </div>
+
                 <!-- Android APK İndirme -->
                 <div class="bg-white rounded-xl p-6 mb-4 border-2 border-green-500">
                     <div class="flex items-center mb-4">
@@ -160,67 +198,45 @@
                         </div>
                     </div>
                     
-                    <button onclick="downloadAPK()" class="download-button w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg pulse">
+                    <button onclick="downloadAPK()" class="download-button w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg">
                         <i class="fas fa-download mr-2"></i>
                         APK İndir (Android)
-                    </button>
-                    
-                    <div class="mt-4 text-sm text-gray-600">
-                        <p class="mb-2"><i class="fas fa-check text-green-500 mr-2"></i>Android 5.0+ uyumlu</p>
-                        <p class="mb-2"><i class="fas fa-check text-green-500 mr-2"></i>Güvenli ve hızlı kurulum</p>
-                        <p><i class="fas fa-check text-green-500 mr-2"></i>Hiçbir ücret yok</p>
-                    </div>
-                </div>
-
-                <!-- App Store -->
-                <div class="bg-white rounded-xl p-6 mb-4 border-2 border-blue-500">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
-                            <i class="fab fa-apple text-white text-2xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800">App Store</h3>
-                            <p class="text-sm text-gray-600">Yakında gelecek</p>
-                        </div>
-                    </div>
-                    
-                    <button disabled class="w-full bg-gray-400 text-white py-4 rounded-xl font-bold text-lg cursor-not-allowed">
-                        <i class="fas fa-clock mr-2"></i>
-                        App Store (Yakında)
-                    </button>
-                </div>
-
-                <!-- Web Uygulama -->
-                <div class="bg-white rounded-xl p-6 border-2 border-purple-500">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
-                            <i class="fas fa-globe text-white text-2xl"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-800">Web Uygulama</h3>
-                            <p class="text-sm text-gray-600">Tarayıcıda kullan</p>
-                        </div>
-                    </div>
-                    
-                    <button onclick="openWebApp()" class="download-button w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-4 rounded-xl font-bold text-lg">
-                        <i class="fas fa-external-link-alt mr-2"></i>
-                        Web Uygulamasını Aç
                     </button>
                 </div>
 
                 <!-- Kurulum Talimatları -->
-                <div class="mt-6 bg-yellow-50 rounded-xl p-4">
-                    <h4 class="font-bold text-gray-800 mb-2">
+                <div class="bg-yellow-50 rounded-xl p-4">
+                    <h4 class="font-bold text-gray-800 mb-3">
                         <i class="fas fa-info-circle text-yellow-500 mr-2"></i>
-                        Kurulum Talimatları
+                        Kolay Kurulum Adımları
                     </h4>
-                    <ol class="text-sm text-gray-600 space-y-1">
-                        <li>1. "APK İndir" butonuna tıklayın</li>
-                        <li>2. İndirme tamamlandığında dosyaya tıklayın</li>
-                        <li>3. "Bilinmeyen kaynaklar" iznini verin</li>
-                        <li>4. Kurulumu tamamlayın</li>
-                        <li>5. Uygulamayı açın ve kullanmaya başlayın!</li>
-                    </ol>
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <div class="flex items-start gap-3">
+                            <div class="step-indicator">1</div>
+                            <p>"Anında Yükle" butonuna tıklayın</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="step-indicator">2</div>
+                            <p>Chrome menüsünden "Ana ekrana ekle" seçin</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="step-indicator">3</div>
+                            <p>"Yükle" butonuna basarak tamamlayın</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="step-indicator">4</div>
+                            <p>Uygulama ana ekranınıza eklensin!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Uygulama Alternatif -->
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600 mb-2">Veya doğrudan web'de kullanın:</p>
+                    <button onclick="openWebApp()" class="text-purple-600 font-bold hover:text-purple-700">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        Web Uygulamasını Aç
+                    </button>
                 </div>
             </div>
         </div>
@@ -252,15 +268,31 @@
     </div>
 
     <script>
+        // PWA Kurulum
+        let deferredPrompt = null;
+
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        alert('BEYAZ KUŞ ana ekranınıza eklendi!');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // Manuel kurulum rehberi
+                alert('Chrome menüsünden (üç nokta) "Ana ekrana ekle" seçeneğini kullanın.');
+            }
+        }
+
         function downloadAPK() {
-            // Simüle edilmiş APK indirme
-            const link = document.createElement('a');
-            link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('BEYAZ KUŞ APK Dosyası - Bu bir simülasyondur');
-            link.download = 'beyaz-kus-v1.0.apk';
-            link.click();
-            
-            // Kullanıcıyı bilgilendir
-            alert('APK indirme başlatıldı! Bu demo versiyondur. Gerçek uygulamayı geliştirmek için lütfen iletişime geçin.');
+            alert('APK dosyası hazırlanıyor. Bu demo versiyondur.');
         }
 
         function openWebApp() {
@@ -270,7 +302,7 @@
         // Mobil cihaz kontrolü
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
             // Mobil cihazda özel optimizasyonlar
-            document.querySelector('.phone-mockup').style.transform = 'scale(0.8)';
+            console.log('Mobil cihaz algılandı');
         }
     </script>
 </body>
