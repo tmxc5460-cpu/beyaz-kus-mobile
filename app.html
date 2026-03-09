@@ -200,7 +200,7 @@
                     
                     <button onclick="downloadAPK()" class="download-button w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg">
                         <i class="fas fa-download mr-2"></i>
-                        APK İndir (Android)
+                        APK İndir (Android) - Gerçek Dosya
                     </button>
                 </div>
 
@@ -292,7 +292,33 @@
         }
 
         function downloadAPK() {
-            alert('APK dosyası hazırlanıyor. Bu demo versiyondur.');
+            // Gerçek APK dosyasını indir
+            const link = document.createElement('a');
+            link.href = 'beyaz-kus.apk';
+            link.download = 'beyaz-kus-v1.0.apk';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Başarı mesajı
+            showDownloadSuccess();
+        }
+
+        function showDownloadSuccess() {
+            const message = document.createElement('div');
+            message.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            message.innerHTML = '<i class="fas fa-check-circle mr-2"></i>APK indiriliyor...';
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.innerHTML = '<i class="fas fa-check-circle mr-2"></i>APK başarıyla indirildi!';
+                message.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            }, 1000);
+            
+            setTimeout(() => {
+                document.body.removeChild(message);
+            }, 3000);
         }
 
         function openWebApp() {

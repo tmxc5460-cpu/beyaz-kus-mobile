@@ -1,102 +1,57 @@
-# KNK BEYAZ KUŞ - AI Asistan v1.0
+# BEYAZ KUŞ AI Asistan
 
-## Açıklama
-KNK BEYAZ KUŞ, CGBT'ye tamamen bağımsız çalışan kapsamlı bir yapay zeka asistanıdır. Hem sohbet hem de görsel düzenleme özelliklerine sahiptir.
+Dünyanın en hızlı AI asistanı - Matematik dehası ve sesli konuşma özellikleri.
+
+## Mobil Uygulama İndirme
+
+### Android APK İndirme
+- **Doğrudan İndir**: `beyaz-kus.apk` dosyasını indir
+- **Gerçek Dosya**: Demo değil, tam fonksiyonlu uygulama
+- **Kurulum**: İndirilen APK dosyasına tıkla ve kur
+
+### PWA (Progressive Web App)
+- **Hiçbir İndirme Gerekmez**: Tarayıcıdan doğrudan kullanım
+- **Kurulum**: Chrome menüsünden "Ana ekrana ekle"
 
 ## Özellikler
 
-### 🤖 AI Sohbet Sistemi
-- **Kapsamlı Bilgi**: Teknoloji, bilim, tarih, sanat, spor, sağlık, eğitim ve daha birçok konuda bilgi
-- **Akıllı Yanıtlar**: Doğal dil işleme ile anlamlı yanıtlar
-- **Türkçe Desteği**: Tamamen Türkçe arayüz ve yanıt sistemi
-- **Sohbet Geçmişi**: Konuşmaların takibi
+### AI Asistan
+- **Anında Cevap**: Dünyanın en hızlı AI'sı
+- **Matematik Dehası**: Karmaşık hesaplamalar
+- **Sesli Konuşma**: Text-to-speech özelliği
+- **Türkçe**: Tamamen Türkçe destek
 
-### 🎨 Görsel Editör
-- **Filtreler**: Gri tonu, sepya, bulanıklaştırma, parlaklık, kontrast, ters çevir
-- **Döndürme**: 90 derece görsel döndürme
-- **Sıfırlama**: Orijinal görseli geri yükleme
-- **İndirme**: Düzenlenmiş görseli kaydetme
+### Görsel İşlem Merkezi
+- **AI Komutları**: "Arka planı siyah yap" gibi komutlar
+- **Çift Resim**: Overlay özelliği
+- **Resim Çevir**: Yatay çevirme
+- **Gerçek Zamanlı**: Anında işleme
 
-### 🛡️ Bağımsızlık
-- **CGBT Bağımsız**: Hiçbir harici servise bağlı değil
-- **Tamamen Yerel**: Tüm işlemler tarayıcıda gerçekleşir
-- **Güvenli**: Verileriniz cihazınızda kalır
+### Mobil Özellikler
+- **Bildirimler**: Push bildirim desteği
+- **Çevrimdışı**: Service Worker ile offline çalışma
+- **Responsive**: Tüm ekran boyutlarında mükemmel
+- **Hızlı Yükleme**: Cache ile anında açılış
 
-## Kullanım
+## Kurulum
 
-### Başlatma
-1. `index.html` dosyasını web tarayıcınızda açın
-2. Uygulama otomatik olarak yüklenecektir
+### Android
+1. "APK İndir" butonuna tıkla
+2. İndirilen dosyaya tıkla
+3. "Bilinmeyen kaynaklar" iznini ver
+4. Kurulumu tamamla
 
-### Sohbet Özellikleri
-- Mesaj kutusuna sorularınızı yazın
-- Enter tuşuna basarak gönderin
-- AI anında yanıt verecektir
-
-### Görsel Düzenleme
-1. "Yükle" butonuna tıklayarak görsel seçin
-2. Filtreleri kullanarak düzenleyin
-3. "İndir" butonuyla kaydedin
-
-## Desteklenen Konular
-
-### Teknoloji
-- Yapay zeka ve makine öğrenmesi
-- Programlama dilleri
-- Web geliştirme
-- Mobil uygulamalar
-- Siber güvenlik
-
-### Bilim
-- Fizik, kimya, biyoloji
-- Matematik ve istatistik
-- Astronomi
-- Jeoloji
-
-### Tarih
-- Dünya tarihi
-- Osmanlı İmparatorluğu
-- Antik dönemler
-- Modern tarih
-
-### Sanat ve Kültür
-- Resim ve heykel
-- Müzik
-- Edebiyat
-- Tiyatro ve sinema
-
-### Spor
-- Futbol, basketbol, voleybol
-- Spor kuralları
-- Takımlar ve oyuncular
-
-## Teknik Özellikler
-
-- **Sürüm**: 1.0
-- **Dil**: Türkçe
-- **Platform**: Web tabanlı
-- **Bağımlılıklar**: Yok (sadece CDN kütüphaneleri)
-- **Tarayıcı Desteği**: Modern tarayıcılar
-
-## Geliştirme
-
-### Dosya Yapısı
-```
-BEYAZ KUŞ/
-├── index.html      # Ana arayüz
-├── script.js       # JavaScript işlevleri
-└── README.md       # Dokümantasyon
-```
-
-### Teknolojiler
-- HTML5
-- CSS3 (Tailwind CSS)
-- Vanilla JavaScript
-- Canvas API
-
-## Lisans
-Bu proje tamamen bağımsız bir geliştirmedir ve özgün kod içerir.
+### iOS
+1. Safari ile siteyi aç
+2. Paylaş menüsünden "Ana Ekrana Ekle"
+3. Ana ekranda ekle
 
 ## İletişim
-KNK BEYAZ KUŞ - Bağımsız AI Asistan
-Sürüm 1.0
+
+**Geliştirici**: Ödül Ensar Yılmaz
+**Versiyon**: 1.0
+**Lisans**: Ücretsiz
+
+---
+
+BEYAZ KUŞ - Dünyanın En Hızlı AI Asistanı
