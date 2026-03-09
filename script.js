@@ -333,6 +333,11 @@ function sendMessage() {
     
     if (message === '') return;
     
+    // Mobil klavyeyi gizle
+    if (isMobile()) {
+        input.blur();
+    }
+    
     // Kullanıcı mesajını ekle
     addMessage(message, 'user');
     input.value = '';
@@ -510,6 +515,11 @@ function sendImageChatMessage() {
     
     if (message === '') return;
     
+    // Mobil klavyeyi gizle
+    if (isMobile()) {
+        input.blur();
+    }
+    
     // Mesajı sohbete ekle
     addImageChatMessage(message, 'user');
     input.value = '';
@@ -658,9 +668,11 @@ function loadImage(event) {
     reader.onload = function(e) {
         const img = new Image();
         img.onload = function() {
-            // Canvas boyutlarını ayarla
-            const maxWidth = 400;
-            const maxHeight = 300;
+            // Mobil cihaz için daha küçük boyutlar
+            const isMobileDevice = isMobile();
+            const maxWidth = isMobileDevice ? 300 : 400;
+            const maxHeight = isMobileDevice ? 200 : 300;
+            
             let width = img.width;
             let height = img.height;
             
@@ -676,12 +688,24 @@ function loadImage(event) {
                 }
             }
             
+            // Canvas'ı mobil uyumlu yap
             canvas.width = width;
             canvas.height = height;
+            
+            // Mobil cihazda canvas stilini ayarla
+            if (isMobileDevice) {
+                canvas.style.maxWidth = '100%';
+                canvas.style.height = 'auto';
+            }
             
             ctx.drawImage(img, 0, 0, width, height);
             originalImage = ctx.getImageData(0, 0, width, height);
             currentImage = ctx.getImageData(0, 0, width, height);
+            
+            // Mobil cihazda başarı mesajı
+            if (isMobileDevice && notificationPermission === 'granted') {
+                showNotification('BEYAZ KUŞ', 'Görsel yüklendi!');
+            }
         };
         img.src = e.target.result;
     };
