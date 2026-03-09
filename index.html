@@ -122,70 +122,17 @@
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
-        <div class="login-container w-full max-w-md p-8 rounded-2xl shadow-2xl">
-            <div class="text-center mb-8">
-                <i class="fas fa-dove text-6xl text-purple-600 mb-4"></i>
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">BEYAZ KUŞ</h1>
-                <p class="text-gray-600">AI Asistan v1.0 - Giriş Yap</p>
-            </div>
-            
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                        <i class="fas fa-user mr-2"></i>Kullanıcı Adı
-                    </label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        placeholder="Kullanıcı adınızı girin"
-                        required
-                    >
-                </div>
-                
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                        <i class="fas fa-lock mr-2"></i>Şifre
-                    </label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                        placeholder="Şifrenizi girin"
-                        required
-                    >
-                </div>
-                
-                <button 
-                    type="submit" 
-                    class="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg hover:from-purple-600 hover:to-indigo-700 transition font-bold"
-                >
-                    <i class="fas fa-sign-in-alt mr-2"></i>Giriş Yap
-                </button>
-            </form>
-            
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Herhangi bir kullanıcı adı ve şifre ile giriş yapabilirsiniz
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Application -->
-    <div id="mainApp" class="hidden min-h-screen">
+    <!-- Main App - Direct Access -->
+    <div id="mainApp" class="min-h-screen">
         <!-- Mobile Menu Button -->
-        <div class="mobile-menu fixed top-4 right-4 z-50">
+        <div class="mobile-only fixed top-4 right-4 z-50">
             <button onclick="toggleMobileMenu()" class="px-4 py-2 bg-purple-600 text-white rounded-lg shadow-lg">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu fixed inset-0 bg-purple-600 z-40 hidden">
+        <div id="mobileMenu" class="mobile-menu hidden">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-bold text-white">
@@ -197,20 +144,10 @@
                 </div>
                 
                 <div class="space-y-4">
-                    <button onclick="showSection('chat'); toggleMobileMenu();" class="w-full px-4 py-3 bg-white text-purple-600 rounded-lg font-bold">
-                        <i class="fas fa-comments mr-2"></i>Sohbet
-                    </button>
-                    <button onclick="showSection('image'); toggleMobileMenu();" class="w-full px-4 py-3 bg-white text-purple-600 rounded-lg font-bold">
-                        <i class="fas fa-image mr-2"></i>Görsel Editör
-                    </button>
-                    <button onclick="logout()" class="w-full px-4 py-3 bg-red-500 text-white rounded-lg font-bold">
-                        <i class="fas fa-sign-out-alt mr-2"></i>Çıkış
-                    </button>
-                </div>
-                
-                <div class="mt-8 text-white">
-                    <p class="text-sm opacity-90">Kullanıcı: <span id="mobileUsername" class="font-bold"></span></p>
-                    <p class="text-xs opacity-75 mt-2">v1.0 - Ödül Ensar Yılmaz</p>
+                    <div class="text-white">
+                        <p class="text-sm opacity-90">Hoş geldin!</p>
+                        <p class="text-xs opacity-75 mt-2">v1.0 - Ödül Ensar Yılmaz</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,9 +160,6 @@
             <p class="text-white text-lg">⚡ Dünyanın En Hızlı AI Asistanı - Sürüm 1.0</p>
             <p class="text-white text-sm mt-2 opacity-90">CGBT'ye bağlı olmayan, ultra hızlı yapay zeka</p>
             <p class="text-white text-sm mt-1 opacity-80">Geliştirici: Ödül Ensar Yılmaz | Matematik Dehası</p>
-            <div class="mt-4">
-                <span class="text-white text-sm">Hoş geldin, <span id="desktopUsername" class="font-bold"></span>!</span>
-            </div>
         </header>
 
         <div class="container mx-auto px-4 pb-8">
@@ -245,7 +179,7 @@
             </div>
 
             <!-- Chat Section -->
-            <div id="chatSection" class="section">
+            <div id="chatSection" class="section mb-8">
                 <div class="chat-container rounded-2xl shadow-2xl p-4 md:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl md:text-2xl font-bold text-gray-800">
@@ -280,16 +214,16 @@
                         >
                         <button 
                             onclick="sendMessage()" 
-                            class="px-4 md:px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg hover:from-purple-600 hover:to-indigo-700 transition"
+                            class="px-4 md:px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition font-bold text-sm md:text-base"
                         >
-                            <i class="fas fa-paper-plane"></i>
+                            <i class="fas fa-paper-plane mr-2"></i>Gönder
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Image Editor Section -->
-            <div id="imageSection" class="section hidden">
+            <div id="imageSection" class="section">
                 <div class="image-editor p-4 md:p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-xl md:text-2xl font-bold text-gray-800">

@@ -138,6 +138,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Bildirim izni iste
     requestNotificationPermission();
     
+    // Canvas'ı başlat
+    canvas = document.getElementById('imageCanvas');
+    if (canvas) {
+        ctx = canvas.getContext('2d');
+    }
+    
     // Mobil cihazda kurulum rehberini göster
     setTimeout(() => {
         if (isMobile() && !deferredPrompt) {
